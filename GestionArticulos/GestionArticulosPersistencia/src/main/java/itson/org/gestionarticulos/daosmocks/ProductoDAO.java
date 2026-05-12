@@ -232,8 +232,4 @@ private static final Logger LOGGER = Logger.getLogger(Producto.class.getName());
         }
     }
     
-    
-    
-    
-    
 }

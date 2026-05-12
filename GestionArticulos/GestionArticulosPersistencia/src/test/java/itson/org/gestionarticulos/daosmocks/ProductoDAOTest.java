@@ -5,7 +5,9 @@ import itson.org.gestionarticulos.entidades.Producto;
 import itson.org.gestionarticulos.enums.EstadoProducto;
 import itson.org.gestionarticulos.enums.Genero;
 import itson.org.gestionarticulos.enums.TipoProducto;
+import itson.org.gestionarticulos.exceptions.PersistenciaException;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -130,6 +132,109 @@ public class ProductoDAOTest {
             assertEquals(idABorrar, eliminado.getIdProducto(), "El Id del eliminado debe coincidir");
             System.out.println("Se eliminó correctamente: " + eliminado.getTitulo());
         });
+    }
+    
+    @Test
+    public void testConsultarProductoPorIdFuncionaOk() throws Exception {
+        // SET UP :D
+        // Usaremos el ID "001" que ya viene cargado por defecto en el constructor del DAO
+        String idExistente = "001";
+        
+        // EJECUCIÓN
+        assertDoesNotThrow(() -> {
+            Producto encontrado = dao.consultarProductoPorId(idExistente);
+            
+            // VERIFICACIÓN lol
+            assertNotNull(encontrado, "El producto debería existir");
+            assertEquals("Breach", encontrado.getTitulo(), "El título debería coincidir con el cargado");
+            System.out.println("Producto encontrado por ID: " + encontrado);
+        });
+    }
+
+    @Test
+    public void testConsultarCatalogoRegresaListaConDatos() throws Exception {
+        // SET UP 
+        // No ocupamos registrar nada extra porque el DAO ya carga uno al inicio
+        
+        // EJECUCIÓN
+        List<Producto> lista = dao.consultarCatalogo();
+        
+        // VERIFICACIÓN
+        assertNotNull(lista, "La lista no puede ser null");
+        assertFalse(lista.isEmpty(), "La lista debería tener al menos el producto precargado");
+        System.out.println("Tamaño del catálogo consultado: " + lista.size());
+    }
+
+    @Test
+    public void testBuscarProductosPorFiltroFuncionaOk() throws Exception {
+        // SET UP
+        // Buscaremos "Pilots" que es parte del artista "Twenty One Pilots"
+        String filtro = "Pilots";
+        
+        // EJECUCIÓN
+        List<Producto> filtrados = dao.buscarProductos(filtro);
+        
+        // VERIFICACIÓN
+        assertFalse(filtrados.isEmpty(), "Debería encontrar productos con el filtro: " + filtro);
+        // Checamos que el artista realmente contenga el filtro (ignorando mayúsculas)
+        assertTrue(filtrados.get(0).getArtista().toLowerCase().contains(filtro.toLowerCase()));
+        System.out.println("Resultados de búsqueda con '" + filtro + "': " + filtrados.size());
+    }
+
+    @Test
+    public void testBuscarProductoPorTipoFuncionaOk() throws Exception {
+        // SET UP
+        // El producto precargado "001" es de tipo CASSETTE
+        TipoProducto tipoBusqueda = TipoProducto.CASSETTE;
+        
+        // EJECUCIÓN
+        List<Producto> resultados = dao.buscarProductoPorTipo(tipoBusqueda);
+        
+        // VERIFICACIÓN
+        assertFalse(resultados.isEmpty(), "Debería haber al menos un cassette");
+        assertEquals(TipoProducto.CASSETTE, resultados.get(0).getTipo());
+        System.out.println("Productos de tipo " + tipoBusqueda + " encontrados: " + resultados.size());
+    }
+
+    @Test
+    public void testConsultarStockCriticoFiltraCorrectamente() throws Exception {
+        // SET UP
+        // Registramos un producto que tenga 3 de stock (es menor a 5, por lo tanto es crítico)
+        Producto critico = new Producto(null, "Rare Album", "Unknown", 
+                                        TipoProducto.VINILO, Genero.POP, 2000.0, 3, 
+                                        EstadoProducto.DISPONIBLE, imagenTest, LocalDateTime.now());
+        dao.registratNuevoProducto(critico);
+        
+        // EJECUCIÓN
+        List<Producto> listaCritica = dao.consultarStockCritico();
+        
+        // VERIFICACIÓN
+        // Buscamos si el producto "Rare Album" está en la lista de críticos
+        boolean fueDetectado = false;
+        for(Producto p : listaCritica) {
+            if(p.getTitulo().equals("Rare Album")) {
+                fueDetectado = true;
+                break;
+            }
+        }
+        
+        assertTrue(fueDetectado, "El producto con stock 3 debió ser detectado como crítico");
+        System.out.println("Productos en stock crítico encontrados: " + listaCritica.size());
+    }
+
+    @Test
+    public void testConsultarProductoPorIdLanzaExcepcionSiNoExiste() {
+        // SET UP
+        String idFalso = "999";
+        
+        // EJECUCIÓN Y VERIFICACIÓN
+        // Aquí probamos que falle cuando debe fallar
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> {
+            dao.consultarProductoPorId(idFalso);
+        });
+        
+        assertEquals("No se encontró el producto", ex.getMessage());
+        System.out.println("La excepción se lanzó correctamente para el ID inexistente.");
     }
     
 }
