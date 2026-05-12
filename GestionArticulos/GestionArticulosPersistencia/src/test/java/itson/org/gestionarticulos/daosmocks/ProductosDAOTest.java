@@ -19,22 +19,22 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author emyla
  */
-public class ProductoDAOTest {
+public class ProductosDAOTest {
     
-    private ProductoDAO dao;
+    private ProductosDAO dao;
     private Imagen imagenTest = new Imagen("02", new byte[0]);
     
-    public ProductoDAOTest() {
+    public ProductosDAOTest() {
     
     }
         
     @BeforeEach
     public void setUp() {
-        this.dao = new ProductoDAO();
+        this.dao = new ProductosDAO();
     }
     
     /**
-     * Test of registratNuevoProducto method, of class ProductoDAO.
+     * Test of registratNuevoProducto method, of class ProductosDAO.
      */
     @Test
     public void testRegistratNuevoProductoFuncionaOk() throws Exception {

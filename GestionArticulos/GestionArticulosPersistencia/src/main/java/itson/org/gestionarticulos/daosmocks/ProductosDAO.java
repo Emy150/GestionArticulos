@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author emyla
  */
-public class ProductoDAO implements IProductosDAO{
+public class ProductosDAO implements IProductosDAO{
 
 private static final Logger LOGGER = Logger.getLogger(Producto.class.getName());
 
@@ -25,7 +25,7 @@ private static final Logger LOGGER = Logger.getLogger(Producto.class.getName());
     private static List<Producto> catalogo;
     private Imagen imagenMock = new Imagen("01", new byte[0]);
     
-    public ProductoDAO(){
+    public ProductosDAO(){
         // Para inicializar una sola vez el catalogo
         if (catalogo == null) {
             catalogo = new ArrayList<>();
