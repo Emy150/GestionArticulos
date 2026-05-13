@@ -25,3 +25,5 @@ replay_pid*
 /GestionArticulos/GestionArticulosPersistencia/nbproject/
 /GestionArticulos/GestionArticulosDominio/target/
 /GestionArticulos/GestionArticulosPersistencia/target/
+/GestionArticulos/GestionArticulosNegocio/target/
+/GestionArticulosDtos/target/
