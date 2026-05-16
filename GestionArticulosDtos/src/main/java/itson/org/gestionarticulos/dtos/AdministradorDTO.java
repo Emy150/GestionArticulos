@@ -6,6 +6,7 @@ package itson.org.gestionarticulos.dtos;
  */
 public class AdministradorDTO {
     
+    
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;

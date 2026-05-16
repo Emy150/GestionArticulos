@@ -28,5 +28,7 @@ public interface IProductosDAO {
     
     public abstract List<Producto> buscarPorEstado(EstadoProducto estado) throws PersistenciaException;
     
+    public abstract List<Producto> buscarPorGenero(String idGenero) throws PersistenciaException;
+    
     public abstract List<Producto> consultarStockCritico() throws PersistenciaException;
 }

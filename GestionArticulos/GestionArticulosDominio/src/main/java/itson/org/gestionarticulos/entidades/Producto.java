@@ -1,21 +1,30 @@
 package itson.org.gestionarticulos.entidades;
 
 import itson.org.gestionarticulos.enums.EstadoProducto;
-import itson.org.gestionarticulos.enums.Genero;
 import itson.org.gestionarticulos.enums.TipoProducto;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
 
 /**
- * 
- * @author emyla
+ * * @author emyla
  */
 public class Producto {
 
+    @BsonId
+    @BsonRepresentation(BsonType.OBJECT_ID)
     private String idProducto;
+    
     private String titulo;
     private String artista;
     private TipoProducto tipo;
-    private Genero genero;
+    
+    // Referencia Manual a la colección Generos
+    @BsonRepresentation(BsonType.OBJECT_ID)
+    private String idGenero; 
+    
     private Double precio;
     private Integer stockInicial;
     private EstadoProducto estado;
@@ -31,7 +40,7 @@ public class Producto {
             String titulo, 
             String artista, 
             TipoProducto tipo, 
-            Genero genero, 
+            String idGenero, 
             Double precio, 
             Integer stockInicial, 
             EstadoProducto estado, 
@@ -42,7 +51,7 @@ public class Producto {
         this.titulo = titulo;
         this.artista = artista;
         this.tipo = tipo;
-        this.genero = genero;
+        this.idGenero = idGenero;
         this.precio = precio;
         this.stockInicial = stockInicial;
         this.estado = estado;
@@ -82,12 +91,12 @@ public class Producto {
         this.tipo = tipo;
     }
 
-    public Genero getGenero() {
-        return genero;
+    public String getIdGenero() {
+        return idGenero;
     }
 
-    public void setGenero(Genero genero) {
-        this.genero = genero;
+    public void setIdGenero(String idGenero) {
+        this.idGenero = idGenero;
     }
 
     public Double getPrecio() {
@@ -130,6 +139,29 @@ public class Producto {
         this.fechaRegistro = fechaRegistro;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.idProducto);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        return Objects.equals(this.idProducto, other.idProducto);
+    }
+    
+    @Override
     public String toString() {
         return "Producto{" +
                 "id='" + idProducto + '\'' +
@@ -137,7 +169,7 @@ public class Producto {
                 ", artista='" + artista + '\'' +
                 ", precio=$" + precio +
                 ", stock=" + stockInicial +
+                ", idGenero='" + idGenero + '\'' +
                 '}';
     }
-    
 }

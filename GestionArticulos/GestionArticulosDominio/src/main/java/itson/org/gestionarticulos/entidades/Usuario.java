@@ -1,12 +1,22 @@
 package itson.org.gestionarticulos.entidades;
 
+import java.util.Objects;
+import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
+
 /**
  *
  * @author emyla
  */
 public class Usuario {
     
+    @BsonId
+    @BsonProperty("_id")
+    @BsonRepresentation(BsonType.OBJECT_ID)
     private String idUsuario;
+    
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -74,5 +84,32 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.idUsuario);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        return Objects.equals(this.idUsuario, other.idUsuario);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsuario=" + idUsuario + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", correo=" + correo + ", contrasenia=" + contrasenia + '}';
+    }
         
+    
 }

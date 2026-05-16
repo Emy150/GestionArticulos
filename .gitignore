@@ -27,3 +27,5 @@ replay_pid*
 /GestionArticulos/GestionArticulosPersistencia/target/
 /GestionArticulos/GestionArticulosNegocio/target/
 /GestionArticulosDtos/target/
+/GestionArticulos/GhosttracksGestionArticulos/target/
+/GestionArticulos/GestionArticulosPresentacion/target/

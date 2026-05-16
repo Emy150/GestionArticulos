@@ -10,6 +10,8 @@
         <module>GestionArticulosPersistencia</module>
         <module>GestionArticulosNegocio</module>
         <module>../GestionArticulosDtos</module>
+        <module>GhosttracksGestionArticulos</module>
+        <module>GestionArticulosPresentacion</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

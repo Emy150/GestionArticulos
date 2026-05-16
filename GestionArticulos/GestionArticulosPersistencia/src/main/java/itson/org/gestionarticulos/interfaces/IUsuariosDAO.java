@@ -11,5 +11,5 @@ public interface IUsuariosDAO {
     
     public abstract Administrador obtenerAdminPorId(String idUsuario) throws PersistenciaException;
     
-    public abstract boolean validarContraseniaAdmin(String contraseña) throws PersistenciaException;
+    public Administrador autenticarAdmin(String correo, String contrasenia) throws PersistenciaException;
 }

@@ -6,6 +6,7 @@ package itson.org.gestionarticulos.dtos;
  */
 public class ProductoDTO {
 
+    private String idProducto;
     private String titulo;
     private String artista;
     private Double precio;
@@ -19,7 +20,8 @@ public class ProductoDTO {
         
     }
 
-    public ProductoDTO(String titulo, String artista, Double precio, Integer stockInicial, String tipo, String genero, String estado, byte[] img) {
+    public ProductoDTO(String idProducto, String titulo, String artista, Double precio, Integer stockInicial, String tipo, String genero, String estado, byte[] img) {
+        this.idProducto = idProducto;
         this.titulo = titulo;
         this.artista = artista;
         this.precio = precio;
@@ -28,6 +30,14 @@ public class ProductoDTO {
         this.genero = genero;
         this.estado = estado;
         this.img = img;
+    }
+
+    public String getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getTitulo() {
